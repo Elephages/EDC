@@ -3525,8 +3525,8 @@ function adjustHP(loom1, loom2, hp1, hp2, item, ability, status, second = false,
     }
 	
     if (hellstorm) {
-        newHP += Math.floor(hp1 * 1 / 6);
-        hazardString += "hellstorm damage and ";
+        newHP += Math.floor(hp1 * 1 / 16);
+        hazardString += "plague damage and ";
     }
 
     if (ability == "Appetite") {
