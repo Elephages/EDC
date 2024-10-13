@@ -2537,82 +2537,82 @@ if (ability1 == "Triple Threat" && (tempType == "Electric" || tempType == "Pyro"
         stuffUsed.item1 = itemA;
 	}
 	
-	if (itemA == "Fiery Amulet" && (move.type == "Pyro" || tempName == "Frost Burn")) {
+	if (itemA == "Fiery Amulet" && (tempType == "Pyro" || tempName == "Frost Burn")) {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Balance Amulet" && move.type == "Basic") {
+	if (itemA == "Balance Amulet" && tempType == "Basic") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Biotic Amulet" && move.type == "Nature") {
+	if (itemA == "Biotic Amulet" && tempType == "Nature") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Fluid Amulet" && move.type == "Hydro") {
+	if (itemA == "Fluid Amulet" && tempType == "Hydro") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Charged Amulet" && move.type == "Electric") {
+	if (itemA == "Charged Amulet" && tempType == "Electric") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Umbral Amulet" && move.type == "Dark") {
+	if (itemA == "Umbral Amulet" && tempType == "Dark") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Radiant Amulet" && move.type == "Light") {
+	if (itemA == "Radiant Amulet" && tempType == "Light") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Earthen Amulet" && move.type == "Geo") {
+	if (itemA == "Earthen Amulet" && tempType == "Geo") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Turbulent Amulet" && move.type == "Wind") {
+	if (itemA == "Turbulent Amulet" && tempType == "Wind") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Caustic Amulet" && move.type == "Toxic") {
+	if (itemA == "Caustic Amulet" && tempType == "Toxic") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 		
-	if (itemA == "Courage Amulet" && move.type == "Martial") {
+	if (itemA == "Courage Amulet" && tempType == "Martial") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 		
-	if (itemA == "Glacial Amulet" && move.type == "Ice") {
+	if (itemA == "Glacial Amulet" && tempType == "Ice") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Neural Amulet" && move.type == "Psychic") {
+	if (itemA == "Neural Amulet" && tempType == "Psychic") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Spirited Amulet" && move.type == "Soul") {
+	if (itemA == "Spirited Amulet" && tempType == "Soul") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Adamant Amulet" && move.type == "Metal") {
+	if (itemA == "Adamant Amulet" && tempType == "Metal") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
 	
-	if (itemA == "Arcane Amulet" && move.type == "Mystic") {
+	if (itemA == "Arcane Amulet" && tempType == "Mystic") {
 		multi *= 1.2;
         stuffUsed.item1 = itemA;
     }
@@ -3031,100 +3031,97 @@ if (ability1 == "Triple Threat" && (tempType == "Electric" || tempType == "Pyro"
     }
 	
 			if (itemB == "Leather Cuirass") {
-    if (move.type == "Basic") {
+    if (tempType == "Basic") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 		if (itemB == "Gardening Apron") {
-    if (move.type == "Nature") {
+    if (tempType == "Nature") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 		if (itemB == "Heatproof Suit") {
-    if (move.type == "Pyro" || tempName == "Frost Burn") {
+    if (tempType == "Pyro" || tempName == "Frost Burn") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 		if (itemB == "Snorkel Mask") {
-    if (move.type == "Hydro") {
+    if (tempType == "Hydro") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Rubber Gloves") {
-    if (move.type == "Electric") {
+    if (tempType == "Electric") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "High-Vis Vest") {
-    if (move.type == "Dark") {
+    if (tempType == "Dark") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Tinted Sunglasses") {
-    if (move.type == "Light") {
+    if (tempType == "Light") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Hard Hat") {
-    if (move.type == "Geo") {
+    if (tempType == "Geo") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Pilot Goggles") {
-    if (move.type == "Wind") {
+    if (tempType == "Wind") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Face Shield") {
-    if (move.type == "Toxic") {
+    if (tempType == "Toxic") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Headgear") {
-    if (move.type == "Martial") {
+    if (tempType == "Martial") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Cozy Sweater") {
-    if (move.type == "Ice") {
+    if (tempType == "Ice") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
-
-
-
 if (itemB == "Tinfoil Hat") {
-    if (move.type == "Psychic") {
+    if (tempType == "Psychic") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Warding Charms") {
-    if (move.type == "Soul") {
+    if (tempType == "Soul") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Breaker Pauldrons") {
-    if (move.type == "Metal") {
+    if (tempType == "Metal") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
 }	
 if (itemB == "Crystal Medallion") {
-    if (move.type == "Mystic") {
+    if (tempType == "Mystic") {
         multi *= 0.8; 
 	stuffUsed.item2 = itemB;
     }
