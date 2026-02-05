@@ -315,6 +315,7 @@ let percentHP2 = document.getElementById("percentHP2");
 
 let singleDouble = document.getElementById("singleDouble");
 let levelCheck = document.getElementById("levelCheck");
+let levelCheck50 = document.getElementById("levelCheck50");
 let gsbCheck = document.getElementById("gsbCheck");
 
 
@@ -769,9 +770,13 @@ function updateLevel() {
     if (levelCheck.checked) {
         level1.value = 100;
         level2.value = 100;
-    } else {
+    } else if (levelCheck50.checked) {
         level1.value = 50;
         level2.value = 50;
+    } else {
+        levelCheck.checked = true;
+        level1.value = 100;
+        level2.value = 100;
     }
     update();
 }
@@ -850,6 +855,7 @@ function loadSets(onlyFirst = false, onlySecond = false) {
 
         level1.value = set1.level;
         if (levelCheck.checked) level1.value = 100;
+        else if (levelCheck50.checked) level1.value = 50;
 
         $("#moveOne1").val(set1.moves.move1);
         $("#moveOne1").select2().trigger('change');
@@ -911,6 +917,7 @@ function loadSets(onlyFirst = false, onlySecond = false) {
 
         level2.value = set2.level;
         if (levelCheck.checked) level2.value = 100;
+        else if (levelCheck50.checked) level2.value = 50;
 
         $("#moveOne2").val(set2.moves.move1);
         $("#moveOne2").select2().trigger('change');
