@@ -930,11 +930,25 @@ button:hover,
   .wrap {
     margin-left: 0;
     margin-right: 0;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+    column-gap: 1.5em;
+    row-gap: 1.5em;
   }
 
   .wrap > * {
     flex: 0 0 auto;
+  }
+
+  .results {
+    width: 36em;
+    min-width: 20em;
+  }
+
+  .panel-stack {
+    grid-column: 1 / -1;
   }
 
   /* Keep desktop row layout; allow horizontal scroll on mobile */
