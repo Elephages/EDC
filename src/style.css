@@ -502,15 +502,20 @@ hr {
   width: 100%;
 }
 
-.barbs-group {
+.fieldTraps .barbs-group {
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0;
   padding: 0;
   background: transparent;
   border: none;
   border-radius: 0;
   box-shadow: none;
+}
+
+.fieldTraps .shield-row .left,
+.fieldTraps .shield-row .right {
+  gap: 0;
 }
 
 .barb-count {
@@ -903,4 +908,15 @@ button:hover,
 .radiolbl:hover {
   border-color: var(--accent);
   background: var(--panel-3);
+}
+
+/* Tight grouping for caltrops + shields (no gaps, shared borders) */
+.barb-row .radiolbl,
+.shield-row .radiolbl {
+  margin: 0;
+}
+
+.barb-row .radiolbl + .radiolbl,
+.shield-row .radiolbl + .radiolbl {
+  border-left: 0;
 }
