@@ -498,7 +498,7 @@
                 </div>
                 <div class="infogroup">
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveOne1" onchange="update(true)">
                         </select>
                         <input id="moveOnePower1" value=0 type=number min=0 max=999
@@ -532,7 +532,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveTwo1" onchange="update(true)">
                         </select>
                         <input id="moveTwoPower1" value=0 type=number min=0 max=999
@@ -566,7 +566,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveThree1" onchange="update(true)">
                         </select>
                         <input id="moveThreePower1" value=0 type=number min=0 max=999
@@ -600,7 +600,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveFour1" onchange="update(true)">
                         </select>
                         <input id="moveFourPower1" value=0 type=number min=0 max=999
@@ -1288,7 +1288,7 @@
 
                 <div class="infogroup">
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveOne2" onchange="update(true)">
                         </select>
                         <input id="moveOnePower2" value=0 type=number min=0 max=999
@@ -1322,7 +1322,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveTwo2" onchange="update(true)">
                         </select>
                         <input id="moveTwoPower2" value=0 type=number min=0 max=999
@@ -1356,7 +1356,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveThree2" onchange="update(true)">
                         </select>
                         <input id="moveThreePower2" value=0 type=number min=0 max=999
@@ -1390,7 +1390,7 @@
                         onchange="update()"> 
                     </div>
 
-                    <div>
+                    <div class="move-row">
                         <select class="moveSelect dmg" id="moveFour2" onchange="update(true)">
                         </select>
                         <input id="moveFourPower2" value=0 type=number min=0 max=999
@@ -1466,6 +1466,10 @@
         $('.pokeSelect').select2();
     });
     $(document).ready(function () {
-        $('.moveSelect').select2();
+        var dropdownParent = $('.page-scale');
+        $('.moveSelect').select2({
+            dropdownParent: dropdownParent.length ? dropdownParent : $(document.body),
+            width: 'resolve'
+        });
     });
 </script>

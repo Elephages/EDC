@@ -32,7 +32,7 @@
   --dropdown-bg-hover: var(--panel-3);
   --dropdown-bg-active: var(--panel-3);
   --dropdown-bg-disabled: var(--panel-3);
-  --ui-scale: 0.9;
+  --ui-scale: 0.81;
   --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
   --radius: 10px;
 }
@@ -912,50 +912,36 @@ button:hover,
 
 @media (max-width: 900px) {
   body {
-    zoom: 1;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .page-scale {
-    transform: none;
-    width: 100%;
+    display: inline-block;
+    min-width: max-content;
   }
 
   .wrap {
-    margin: 0 1rem;
-    flex-direction: column;
-    gap: 1rem;
+    flex-wrap: nowrap;
   }
 
-  .results {
-    width: 100%;
-    min-width: 0;
+  .wrap > * {
+    flex: 0 0 auto;
   }
 
-  .panel-row {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    width: 100%;
+  .move-row {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
 
-  .panel-stack-inner {
-    display: flex;
-    width: 100%;
+  .move-row > * {
+    flex: 0 0 auto;
   }
 
-  .panel {
-    width: 100%;
-  }
-
-  .breakpoint {
-    width: 100%;
-    padding-left: 0;
-  }
-
-  .field,
-  .fieldTraps {
-    height: auto;
+  .move-row .select2-container {
+    width: 10em !important;
   }
 }
 
