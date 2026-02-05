@@ -634,11 +634,12 @@ function updateStatusSelectColors() {
         if (!select) continue;
         select.classList.remove(...allClasses);
         let value = select.value;
-        if (value == "healthy") select.classList.add("status-healthy");
-        else if (value == "paralasis") select.classList.add("status-paralyzed");
-        else if (value == "burned") select.classList.add("status-burned");
-        else if (value == "freeze") select.classList.add("status-frozen");
-        else if (value == "poisoned" || value == "diseased") select.classList.add("status-poisoned");
+        if (value == "healthy") select.style.color = "var(--status-healthy)";
+        else if (value == "paralasis") select.style.color = "var(--status-paralyzed)";
+        else if (value == "burned") select.style.color = "var(--status-burned)";
+        else if (value == "freeze") select.style.color = "var(--status-frozen)";
+        else if (value == "poisoned" || value == "diseased") select.style.color = "var(--status-poisoned)";
+        else select.style.color = "var(--text)";
     }
 }
 
@@ -1396,11 +1397,12 @@ function calculateStat(base, IV, EV, level, isHP = false, posNat, name, rest = f
     IV = parseInt(IV);
     EV = parseInt(EV);
     level = parseInt(level);
+    let effectiveEV = EV * 2;
     if (isHP) {
-        return Math.floor((2 * base + IV + Math.floor(EV / 4)) * level / 100) + level + 10;
+        return Math.floor((2 * base + IV + Math.floor(effectiveEV / 4)) * level / 100) + level + 10;
     }
 
-    stat = Math.floor(Math.floor((2 * base + IV + Math.floor(EV / 4)) * level / 100 + 5));
+    stat = Math.floor(Math.floor((2 * base + IV + Math.floor(effectiveEV / 4)) * level / 100 + 5));
     
 
     if (posNat == "strong" && name == "AttackM") {
@@ -1696,6 +1698,27 @@ function detailedReport() {
         }
         return text;
     };
+    let colorStatusText = function (text) {
+        if (!text) return text;
+        let statusMap = [
+            { phrase: "burn damage", cls: "status-burned" },
+            { phrase: "freeze damage", cls: "status-frozen" },
+            { phrase: "poison damage", cls: "status-poisoned" },
+            { phrase: "evenomation damage", cls: "status-poisoned" },
+            { phrase: "envenomation damage", cls: "status-poisoned" },
+        ];
+        for (let i = 0; i < statusMap.length; i++) {
+            let entry = statusMap[i];
+            let regex = new RegExp(entry.phrase, "gi");
+            text = text.replace(regex, function (match) {
+                return "<span class=\"" + entry.cls + "\">" + match + "</span>";
+            });
+        }
+        return text;
+    };
+    let styleHazardText = function (text) {
+        return colorStatusText(colorTerrainText(text));
+    };
 
     if (document.getElementById("moveOneLbl1").htmlFor == selected.id) {
         moveName = moveOne11;
@@ -1849,7 +1872,7 @@ function detailedReport() {
     let myStatus = (second ? status2.value : status1.value);
     let currStatus = (second ? status1.value : status2.value);
     let statStr = "";
-    let statStr2 = currStatus.charAt(0).toUpperCase() + currStatus.slice(1);
+    let statStr2 = "";
 	let guarded = (second ? protected1.checked : protected2.checked);
     let counter = 0;
     let adaptive = { mr: "", mr1: "", mr2: ""};
@@ -1868,11 +1891,68 @@ function detailedReport() {
         adaptiveResult = "melee";
         atkDef = getTempAtkDef(second, adaptive);
     } else atkDef = getTempAtkDef(second, move);
-    if (move.mr == "Melee" && myStatus == "burned" && !firstLoom.types.includes("Fire") && !(adaptiveResult && adaptiveResult == "ranged")) statStr = myStatus.charAt(0).toUpperCase() + myStatus.slice(1);
-	if (move.mr == "Ranged" && myStatus == "freeze" && !firstLoom.types.includes("Ice") && !(adaptiveResult && adaptiveResult == "melee")) statStr = myStatus.charAt(0).toUpperCase() + myStatus.slice(1);
-    if (statStr2 == "Healthy") statStr2 = "";
-    else if (statStr2 == "Paralasis") statStr2 = "Paralyzed";
-    else if (statStr2 == "Diseased") statStr2 = "Envenomated";
+    let attackerAbility = playerAbility;
+    let defenderAbility = ability;
+    let attackerTypes = firstLoom.types || [];
+    let defenderTypes = secondLoom.types || [];
+    let attackerStatusAffects = false;
+    let defenderStatusAffects = false;
+
+    if (myStatus != "healthy") {
+        if ((move.name == "Torment" || move.name == "Splitting Headache")) {
+            attackerStatusAffects = true;
+        }
+        if ((attackerAbility == "Vigorous" || attackerAbility == "Tenacity") && move.mr1 == "Melee Attack") {
+            attackerStatusAffects = true;
+        }
+        if (attackerAbility == "Vicious" && (myStatus == "poisoned" || myStatus == "diseased")) {
+            attackerStatusAffects = true;
+        }
+        if (myStatus == "burned" && move.mr == "Melee" &&
+            !attackerTypes.includes("Pyro") &&
+            !(adaptiveResult && adaptiveResult == "ranged") &&
+            attackerAbility != "Vigorous" &&
+            attackerAbility != "Water Membrane" &&
+            attackerAbility != "Tenacity") {
+            attackerStatusAffects = true;
+        }
+        if (myStatus == "freeze" && move.mr == "Magic" &&
+            !attackerTypes.includes("Ice") &&
+            !(adaptiveResult && adaptiveResult == "ranged") &&
+            attackerAbility != "Vigorous") {
+            attackerStatusAffects = true;
+        }
+    }
+
+    if (currStatus != "healthy") {
+        if (move.name == "Oppress") {
+            defenderStatusAffects = true;
+        }
+        if ((attackerAbility == "Baneful" && (currStatus == "poisoned" || currStatus == "diseased")) ||
+            (attackerAbility == "Mean Spirited")) {
+            defenderStatusAffects = true;
+        }
+        if (attackerAbility == "Brutal Wrath" && (currStatus == "poisoned" || currStatus == "diseased")) {
+            defenderStatusAffects = true;
+        }
+    }
+
+    let prettyStatus = function (value) {
+        if (value == "healthy") return "";
+        if (value == "paralasis") return "Paralyzed";
+        if (value == "burned") return "Burned";
+        if (value == "freeze") return "Frozen";
+        if (value == "poisoned") return "Poisoned";
+        if (value == "diseased") return "Envenomated";
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    };
+
+    if (attackerStatusAffects) {
+        statStr = prettyStatus(myStatus);
+    }
+    if (defenderStatusAffects) {
+        statStr2 = prettyStatus(currStatus);
+    }
     let atkPlus = "";
     let defPlus = "";
 
@@ -2042,7 +2122,23 @@ function detailedReport() {
     possibleDmg.pop();
     let possibleDmgStr = "Possible Damage Amounts: (" + displayDamage(possibleArray) + ")";
     let critStr = ((crit == true || (playerAbility == "Brutal Wrath" && (currStatus == "poisoned" || currStatus == "diseased"))) ? "<span class=\"crit-text\">Crit</span> " : "");
-    let weatherText = colorTerrainText(stuffUsed.weather);
+    let terrainAffectsDamage = false;
+    let tempType = move.type;
+    if (move.name == "Climate Cannon" && !noWeather.checked) {
+        tempType = (rain.checked ? "Hydro" : rocky.checked ? "Geo" : overgrown.checked ? "Nature" : heat.checked ? "Pyro" : enchanted.checked ? "Psychic" : icy.checked ? "Ice" : "Simple");
+    }
+    if (rain.checked && (tempType == "Hydro" || tempType == "Pyro")) terrainAffectsDamage = true;
+    if (heat.checked && (tempType == "Pyro" || tempType == "Hydro")) terrainAffectsDamage = true;
+    if (overgrown.checked && (tempType == "Nature" || tempType == "Toxic" || tempType == "Hydro")) terrainAffectsDamage = true;
+    if (enchanted.checked && (tempType == "Psychic" || tempType == "Mystic")) terrainAffectsDamage = true;
+    if (rocky.checked && move.name == "Climate Cannon") terrainAffectsDamage = true;
+    if (icy.checked && move.name == "Climate Cannon") terrainAffectsDamage = true;
+
+    let weatherText = stuffUsed.weather || "";
+    if (!terrainAffectsDamage) {
+        weatherText = weatherText.replace(/ in [A-Za-z]+ terrain/g, "");
+    }
+    weatherText = colorTerrainText(weatherText);
     let statusClass = function (statusValue) {
         if (statusValue == "paralasis") return "status-paralyzed";
         if (statusValue == "burned") return "status-burned";
@@ -2067,7 +2163,7 @@ function detailedReport() {
     let str = tempAtk + " " + stuffUsed.item1 + " " + stuffUsed.ability1 + " " + statStr + " " + firstLoom.name + " " + critStr + superMove + stuffUsed.extra1 + " vs. " + (!second ? hpEV2.value : hpEV1.value) + " HP / " +
         tempDef + " " + stuffUsed.item2 + " " + stuffUsed.ability2 + " " + statStr2 + " " + secondLoom.name + weatherText + ": " + possibleDmg2 + "-" + possibleDmg3 + " (" + lowerPercent + " - " + upperPercent + "%) -- ";
 
-    let hazardStr = colorTerrainText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount, true)[1]);
+    let hazardStr = styleHazardText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount, true)[1]);
 
     document.getElementById("possibleDmg").innerHTML = possibleDmgStr;
 
@@ -2110,7 +2206,7 @@ function detailedReport() {
 
     let tickDamage = adjustHP(firstLoom, secondLoom, maxHP, selfHP, item, ability, currStatus, second, turnCount, "OHKO")[0];
     tickDamage = tickDamage + Math.floor(maxHP * addedDmg / 100);
-    hazardStr = colorTerrainText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount, "OHKO")[1]);
+    hazardStr = styleHazardText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount, "OHKO")[1]);
     
     let OHKOs = [];
     let tickOHKOs = [];
@@ -2182,7 +2278,7 @@ function detailedReport() {
 
     turnCount = 1;
     hp = hp - adjustHP(firstLoom, secondLoom, maxHP, selfHP, item, ability, currStatus, second, turnCount)[0];
-    hazardStr = colorTerrainText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount)[1]);
+    hazardStr = styleHazardText(adjustHP(firstLoom, secondLoom, hp, selfHP, item, ability, currStatus, second, turnCount)[1]);
 
     for (let i = 0; i < possibleDmg.length; i++) {
         for (let j = 0; j < possibleDmg2.length; j++) {
