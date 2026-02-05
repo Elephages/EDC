@@ -912,7 +912,7 @@ button:hover,
 
 @media (max-width: 900px) {
   :root {
-    --ui-scale: 0.4;
+    --ui-scale: 0.3;
   }
 
   body {
@@ -923,9 +923,12 @@ button:hover,
   .page-scale {
     display: inline-block;
     min-width: max-content;
+    transform-origin: top left;
   }
 
   .wrap {
+    margin-left: 0;
+    margin-right: 0;
     flex-wrap: nowrap;
   }
 
