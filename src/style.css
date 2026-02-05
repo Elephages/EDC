@@ -924,6 +924,7 @@ button:hover,
     display: inline-block;
     min-width: max-content;
     transform-origin: top left;
+    width: max-content;
   }
 
   .wrap {

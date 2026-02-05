@@ -1473,3 +1473,29 @@
         });
     });
 </script>
+<script>
+    (function () {
+        function updateMobileScale() {
+            var mq = window.matchMedia('(max-width: 900px)');
+            var page = document.querySelector('.page-scale');
+            if (!page) return;
+            if (!mq.matches) {
+                document.documentElement.style.removeProperty('--ui-scale');
+                return;
+            }
+            document.documentElement.style.setProperty('--ui-scale', 1);
+            var fullWidth = page.scrollWidth || page.offsetWidth;
+            var padding = 8;
+            var scale = Math.min(1, (window.innerWidth - padding) / fullWidth);
+            document.documentElement.style.setProperty('--ui-scale', scale.toFixed(3));
+        }
+
+        window.addEventListener('resize', updateMobileScale);
+        window.addEventListener('orientationchange', updateMobileScale);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateMobileScale);
+        } else {
+            updateMobileScale();
+        }
+    })();
+</script>
