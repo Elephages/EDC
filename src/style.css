@@ -167,7 +167,8 @@ select {
   background-color: var(--dropdown-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 4px 8px;
+  padding: 6px 10px;
+  min-height: 36px;
   color: var(--text);
 }
 
@@ -837,7 +838,7 @@ th {
   background-color: var(--dropdown-bg);
   border: 1px solid var(--border);
   color: var(--text);
-  height: 34px;
+  height: 38px;
   display: flex;
   align-items: center;
   border-radius: 12px;
@@ -845,7 +846,7 @@ th {
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   color: var(--text);
-  line-height: 32px;
+  line-height: 36px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -875,6 +876,10 @@ th {
 
 .select2-results {
   color: var(--text) !important;
+}
+
+.select2-container--default .select2-results__options {
+  max-height: 320px;
 }
 
 .select2-search--dropdown .select2-search__field {
@@ -954,8 +959,6 @@ button:hover,
 
   h1,
   legend,
-  .infoBar,
-  .resultlbl,
   .radiolbl,
   label,
   input,
@@ -967,6 +970,14 @@ button:hover,
   .small,
   .big {
     font-size: 1em !important;
+  }
+
+  .infoBar,
+  .resultlbl,
+  .results span,
+  #detailedResult,
+  #possibleDmg {
+    font-size: 0.95em !important;
   }
 
   /* Keep desktop row layout; allow horizontal scroll on mobile */
