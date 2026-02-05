@@ -926,27 +926,11 @@ button:hover,
   }
 
   .wrap {
-    margin: 0 2vw;
     flex-wrap: nowrap;
   }
 
   .wrap > * {
     flex: 0 0 auto;
-  }
-
-  .move-row {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-  }
-
-  .move-row > * {
-    flex: 0 0 auto;
-  }
-
-  .move-row .select2-container {
-    width: 10em !important;
   }
 
   /* Keep desktop row layout; allow horizontal scroll on mobile */
