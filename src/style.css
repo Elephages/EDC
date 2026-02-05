@@ -930,11 +930,27 @@ button:hover,
   .wrap {
     margin-left: 0;
     margin-right: 0;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
   .wrap > * {
     flex: 0 0 auto;
+  }
+
+  .wrap .results {
+    width: max-content;
+    min-width: 20em;
+    order: 1;
+  }
+
+  .wrap .results + .results {
+    order: 2;
+  }
+
+  .wrap .panel-stack {
+    order: 3;
   }
 
   /* Keep desktop row layout; allow horizontal scroll on mobile */
