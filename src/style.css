@@ -918,6 +918,7 @@ button:hover,
   body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    font-size: 13px;
   }
 
   .page-scale {
@@ -951,9 +952,35 @@ button:hover,
     grid-column: 1 / -1;
   }
 
+  h1,
+  legend,
+  .infoBar,
+  .resultlbl,
+  .radiolbl,
+  label,
+  input,
+  select,
+  button,
+  span,
+  th,
+  td,
+  .small,
+  .big {
+    font-size: 1em !important;
+  }
+
   /* Keep desktop row layout; allow horizontal scroll on mobile */
   .panel-row {
     flex-wrap: nowrap;
+  }
+
+  .field {
+    height: auto;
+    min-height: 44em;
+  }
+
+  .fieldTraps {
+    height: auto;
   }
 }
 
