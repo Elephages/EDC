@@ -628,18 +628,25 @@ function applyStatusToStats(statusValue, atkElem, atkRElem, spdElem) {
 function updateStatusSelectColors() {
     let selects = [status1, status2];
     let allClasses = ["status-healthy", "status-paralyzed", "status-burned", "status-frozen", "status-poisoned"];
+    let classMap = {
+        healthy: "status-healthy",
+        paralasis: "status-paralyzed",
+        burned: "status-burned",
+        freeze: "status-frozen",
+        poisoned: "status-poisoned",
+        diseased: "status-poisoned",
+    };
 
     for (let i = 0; i < selects.length; i++) {
         let select = selects[i];
         if (!select) continue;
         select.classList.remove(...allClasses);
+        select.style.color = "";
         let value = select.value;
-        if (value == "healthy") select.style.color = "var(--status-healthy)";
-        else if (value == "paralasis") select.style.color = "var(--status-paralyzed)";
-        else if (value == "burned") select.style.color = "var(--status-burned)";
-        else if (value == "freeze") select.style.color = "var(--status-frozen)";
-        else if (value == "poisoned" || value == "diseased") select.style.color = "var(--status-poisoned)";
-        else select.style.color = "var(--text)";
+        let cls = classMap[value];
+        if (cls) {
+            select.classList.add(cls);
+        }
     }
 }
 
