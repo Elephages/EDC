@@ -1464,15 +1464,38 @@
 <script src="src/data.js"></script>
 <script src="src/builtInSets.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.pokeSelect').select2();
-    });
-    $(document).ready(function () {
+    function initSelect2() {
         var dropdownParent = $('.page-scale');
-        $('.moveSelect').select2({
-            dropdownParent: dropdownParent.length ? dropdownParent : $(document.body),
-            width: 'resolve'
-        });
+        var parent = dropdownParent.length ? dropdownParent : $(document.body);
+
+        var initGroup = function ($group) {
+            $group.each(function () {
+                var $el = $(this);
+                var val = $el.val();
+                if ($el.hasClass('select2-hidden-accessible')) {
+                    $el.select2('destroy');
+                }
+                $el.select2({
+                    dropdownParent: parent,
+                    width: 'resolve',
+                    closeOnSelect: true
+                });
+                if (val !== null) {
+                    $el.val(val).trigger('change.select2');
+                }
+                $el.off('select2:select').on('select2:select', function () {
+                    $(this).select2('close');
+                });
+            });
+        };
+
+        initGroup($('.pokeselect, .pokeSelect'));
+        initGroup($('.moveSelect'));
+    }
+
+    $(document).ready(function () {
+        initSelect2();
+        window.initSelect2 = initSelect2;
     });
 </script>
 <script>

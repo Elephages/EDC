@@ -346,7 +346,7 @@ $(document).ready(load);
     loadDropdowns();
     if (document.cookie != "") {
         let seenChangelongCookie = getCookie("changelog2").substring(11);
-        if (seenChangelongCookie != "true") {
+        if (seenChangelongCookie != "true" && changelog) {
             alert(changelog);
             document.cookie = "changelog2=true";
         }
@@ -821,6 +821,10 @@ function importSets() {
     for (let set in importedSets) {
         newSets.push(importedSets[set]);
         addSet(newSets[newSets.length - 1]);
+    }
+
+    if (window.initSelect2) {
+        window.initSelect2();
     }
 
     document.getElementById("import").value = "";

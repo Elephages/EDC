@@ -6924,4 +6924,4 @@ for (let loo in loomians) {
 
 var sets = [];
 
-var changelog = "Eleons Calculator WIP";
+var changelog = "";
